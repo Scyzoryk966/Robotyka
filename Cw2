@@ -1,0 +1,19 @@
+			NXT::Sensor::SetColor(&comm, IN_2 , 'n');
+			Wait(50);
+			color = NXT:: Sensor::GetValue(&comm, IN_2);
+			Wait(50);
+			NXT::Sensor::SetColorOff(&comm, IN_2);
+			Wait(100);
+			cout<<color;
+			if(color < 120)
+			{
+				NXT::Motor::SetForward(&comm, OUT_B, x);
+				NXT::Motor::SetForward(&comm, OUT_C, x);
+				Wait(100);
+			}
+			else
+			{
+				NXT::Motor::SetForward(&comm, OUT_B, y);
+				NXT::Motor::SetReverse(&comm, OUT_C, y);
+				Wait(100)
+			}
