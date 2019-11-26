@@ -1,19 +1,46 @@
-			NXT::Sensor::SetColor(&comm, IN_2 , 'n');
-			Wait(50);
-			color = NXT:: Sensor::GetValue(&comm, IN_2);
-			Wait(50);
-			NXT::Sensor::SetColorOff(&comm, IN_2);
-			Wait(100);
-			cout<<color;
-			if(color < 120)
-			{
-				NXT::Motor::SetForward(&comm, OUT_B, x);
-				NXT::Motor::SetForward(&comm, OUT_C, x);
-				Wait(100);
-			}
-			else
-			{
-				NXT::Motor::SetForward(&comm, OUT_B, y);
-				NXT::Motor::SetReverse(&comm, OUT_C, y);
-				Wait(100)
-			}
+	NXT::Sensor::SetColor(&comm, IN_2, 'n'); # czytanie koloru
+	Wait(50);
+	color = NXT::Sensor::GetValue(&comm, IN_2);
+	Wait(50);
+	NXT::Sensor::SetColorOff(&comm, IN_2);
+	Wait(100);
+	cout << color;
+
+	while (color < 120)
+	{
+		while (i != angle)
+		{
+				NXT::Motor::SetForward(&comm, OUT_B, y);	// skrencanko w lewo
+				NXT::Motor::SetReverse(&comm, OUT_C, y);	
+				Wait(10)
+				//DODAJ TUTAJ STOP SILNIKÓW
+				if(color > 120)
+				{
+					break;
+				}
+				else
+				{
+					i++;
+				}
+		}
+		i = 0;
+		angle += 10;
+		while (i != angle)
+		{
+			NXT::Motor::SetForward(&comm, OUT_C, y);	// skrencanko w prawo o +10 doległosci
+			NXT::Motor::SetReverse(&comm, OUT_B, y);
+			Wait(10)
+				//DODAJ TUTAJ STOP SILNIKÓW
+				if (color > 120)
+				{
+					break;
+				}
+				else
+				{
+					i++;
+				}
+		}
+	}
+	NXT::Motor::SetForward(&comm, OUT_B, x);
+	NXT::Motor::SetForward(&comm, OUT_C, x);
+	Wait(100);
