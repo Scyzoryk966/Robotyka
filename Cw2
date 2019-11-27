@@ -14,6 +14,7 @@
 				{
 					while (i != angle && end != 1)
 					{
+						y = 15;
 							NXT::Motor::SetForward(&comm, OUT_B, y);	// skrencanko w lewo
 							NXT::Motor::SetReverse(&comm, OUT_C, y);	
 							Wait(50);
@@ -32,10 +33,12 @@
 					}
 					i = 0;
 					angle += 5;
-					NXT::Motor::Stop(&comm, OUT_B, 0);
-					NXT::Motor::Stop(&comm, OUT_C, 0);
+					y=0;
+					NXT::Motor::Stop(&comm, OUT_B, y);
+					NXT::Motor::Stop(&comm, OUT_C, y);
 					while (i != angle && end != 1)
 					{
+						y = 15;
 						NXT::Motor::SetForward(&comm, OUT_C, y);	// skrencanko w prawo o +10 doległosci
 						NXT::Motor::SetReverse(&comm, OUT_B, y);
 						Wait(50);
@@ -55,6 +58,7 @@
 				}
 				if (color < 120)
 				{
+					x = 15;
 					NXT::Motor::SetForward(&comm, OUT_B, x);
 					NXT::Motor::SetForward(&comm, OUT_C, x);
 					Wait(100);
