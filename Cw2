@@ -1,47 +1,62 @@
+			color = NXT::Sensor::GetValue(&comm, IN_1);	//0=czarny, 255=biały
+			Wait(50);
+			cout << endl <<"kolor: "<< color;
 
-	color = NXT::Sensor::GetValue(&comm, IN_2);
-	Wait(30);
-	cout << color;
-
-	while (color < 120)
-	{
-		while (i != angle)
-		{
-				NXT::Motor::SetForward(&comm, OUT_B, y);	// skrencanko w lewo
-				NXT::Motor::SetReverse(&comm, OUT_C, y);	
-				Wait(10)
-				//DODAJ TUTAJ STOP SILNIKÓW
-				color = NXT::Sensor::GetValue(&comm, IN_2);
-				Wait(30);
-				if(color > 120)
-				{
-					break;
-				}
-				else
-				{
-					i++;
-				}
-		}
-		i = 0;
-		angle += 10;
-		while (i != angle)
-		{
-			NXT::Motor::SetForward(&comm, OUT_C, y);	// skrencanko w prawo o +10 doległosci
-			NXT::Motor::SetReverse(&comm, OUT_B, y);
-			Wait(10)
-			//DODAJ TUTAJ STOP SILNIKÓW
-			color = NXT::Sensor::GetValue(&comm, IN_2);
-			Wait(30);
-			if (color > 120)
+			if(decyzja=='P' || decyzja=='p')
 			{
-				break;
+				Wait(50);
+				color = NXT::Sensor::GetValue(&comm, IN_1);	//0=czarny, 255=biały
+				Wait(50);
+				i = 0;
+				angle = 5;
+				end = 0;
+				while (color >= 120)
+				{
+					while (i != angle && end != 1)
+					{
+							NXT::Motor::SetForward(&comm, OUT_B, y);	// skrencanko w lewo
+							NXT::Motor::SetReverse(&comm, OUT_C, y);	
+							Wait(50);
+							color = NXT::Sensor::GetValue(&comm, IN_1);
+							cout << endl <<"kolor while1: "<< color;
+							Wait(50);
+							if(color < 120)
+							{
+								end = 1;
+								break;
+							}
+							else
+							{
+								i++;
+							}
+					}
+					i = 0;
+					angle += 5;
+					NXT::Motor::Stop(&comm, OUT_B, 0);
+					NXT::Motor::Stop(&comm, OUT_C, 0);
+					while (i != angle && end != 1)
+					{
+						NXT::Motor::SetForward(&comm, OUT_C, y);	// skrencanko w prawo o +10 doległosci
+						NXT::Motor::SetReverse(&comm, OUT_B, y);
+						Wait(50);
+						color = NXT::Sensor::GetValue(&comm, IN_1);
+						cout << endl <<"kolor while2: "<< color;
+						Wait(50);
+						if (color < 120 )
+						{
+							end = 1;
+							break;
+						}
+						else
+						{
+							i++;
+						}
+					}
+				}
+				if (color < 120)
+				{
+					NXT::Motor::SetForward(&comm, OUT_B, x);
+					NXT::Motor::SetForward(&comm, OUT_C, x);
+					Wait(100);
+				}
 			}
-			else
-			{
-				i++;
-			}
-		}
-	}
-	NXT::Motor::SetForward(&comm, OUT_B, x);
-	NXT::Motor::SetForward(&comm, OUT_C, x);
-	Wait(100);
