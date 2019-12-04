@@ -5,15 +5,15 @@ if (decyzja == 'P' || decyzja == 'p')
 	color = NXT::Sensor::GetValue(&comm, IN_1);	//0=czarny, 255=biały
 	Wait(50);
 	cout << endl << "kolor: " << color;
+	end = 0;
 	/*
 	y = 15;
 	x = 15;
 	i = 0;
-	angle = 5;
-	end = 0;     to to akurat musi być w pentli								to dodać przed głównym while, chyba juz jest*/
+	angle = 5;							to dodać przed głównym while, chyba juz jest*/
 	if(color >= 120)
 	{
-		while (i != angle && end != 1)
+		while (i <= angle && end != 1)
 		{
 			NXT::Motor::SetForward(&comm, OUT_B, y);	// skrencanko w lewo
 			NXT::Motor::SetReverse(&comm, OUT_C, y);
@@ -34,7 +34,7 @@ if (decyzja == 'P' || decyzja == 'p')
 		}
 		i = 0;
 		angle += 5;
-		while (i != angle && end != 1)
+		while (i <= angle && end != 1)
 		{
 			NXT::Motor::SetForward(&comm, OUT_C, y);	// skrencanko w prawo o +10 doległosci
 			NXT::Motor::SetReverse(&comm, OUT_B, y);
