@@ -1,0 +1,25 @@
+if(decyzja=='i' || decyzja=='I')
+			{
+				sonar = NXT::Sensor::GetSonarValue(&comm, IN_2) * 2;
+				Wait(50);
+				if(sonar < 10 || sonar > 350)
+				{
+					NXT::Motor::SetForward(&comm, OUT_B, x);
+					NXT::Motor::SetForward(&comm, OUT_C, x);
+				}
+				else
+				{
+					if(sonar>=10 || sonar<=180)
+					{
+						//lewo
+						NXT::Motor::SetForward(&comm, OUT_C, y);
+						NXT::Motor::SetReverse(&comm, OUT_B, y);
+					}
+					else
+					{
+						//prawo
+						NXT::Motor::SetForward(&comm, OUT_C, y);
+						NXT::Motor::SetReverse(&comm, OUT_B, y);
+					}
+				}
+			}
